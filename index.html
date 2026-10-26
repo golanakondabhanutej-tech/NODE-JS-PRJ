@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Find rural healthcare services, consult doctors online, and book hospital appointments."
+  />
+  <title>RuralCare Connect | Telemedicine and Rural Health</title>
+
+  <style>
+    :root {
+      --primary: #146c5b;
+      --primary-dark: #0b4d40;
+      --primary-light: #e4f5f0;
+      --accent: #f4a261;
+      --blue: #2f6fed;
+      --background: #f6f9f8;
+      --surface: #ffffff;
+      --text: #18302b;
+      --muted: #657773;
+      --border: #dbe6e3;
+      --danger: #b42318;
+      --success: #087443;
+      --shadow: 0 12px 32px rgba(15, 70, 58, 0.1);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--background);
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1160px, calc(100% - 32px));
+      margin-inline: auto;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -50px;
+      left: 16px;
+      z-index: 1000;
+      padding: 10px 16px;
+      color: white;
+      background: var(--primary-dark);
+      border-radius: 8px;
+    }
+
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    .navbar {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--primary-dark);
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: var(--primary);
+      border-radius: 13px;
+      font-size: 1.4rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus {
+      color: var(--primary);
+    }
+
+    .hero {
+      overflow: hidden;
+      padding: 78px 0 70px;
+      background:
+        radial-gradient(circle at 90% 15%, #c8eee3 0, transparent 30%),
+        linear-gradient(135deg, #edf9f5, #ffffff);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 54px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding: 7px 12px;
+      color: var(--primary-dark);
+      background: var(--primary-light);
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: 20px;
+      font-size: clamp(2.45rem, 6vw, 4.7rem);
+      line-height: 1.04;
+      letter-spacing: -0.05em;
+    }
+
+    h1 span {
+      color: var(--primary);
+    }
+
+    .hero-copy {
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .search-panel {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      margin-top: 30px;
+      padding: 9px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .search-panel input {
+      width: 100%;
+      min-width: 0;
+      padding: 12px 14px;
+      border: 0;
+      outline: 0;
+      color: var(--text);
+      background: transparent;
+    }
+
+    .primary-button,
+    .secondary-button,
+    .outline-button {
+      min-height: 46px;
+      padding: 11px 18px;
+      border: 0;
+      border-radius: 12px;
+      font-weight: 800;
+      transition: 0.2s ease;
+    }
+
+    .primary-button {
+      color: white;
+      background: var(--primary);
+    }
+
+    .primary-button:hover,
+    .primary-button:focus {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .secondary-button {
+      color: var(--primary-dark);
+      background: var(--primary-light);
+    }
+
+    .secondary-button:hover,
+    .secondary-button:focus {
+      background: #cfece4;
+    }
+
+    .outline-button {
+      color: var(--primary);
+      background: white;
+      border: 1px solid var(--primary);
+    }
+
+    .outline-button:hover,
+    .outline-button:focus {
+      color: white;
+      background: var(--primary);
+    }
+
+    .hero-note {
+      margin: 12px 2px 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .hero-card {
+      position: relative;
+      min-height: 400px;
+      padding: 28px;
+      color: white;
+      background: linear-gradient(150deg, var(--primary), var(--primary-dark));
+      border-radius: 30px;
+      box-shadow: 0 28px 60px rgba(11, 77, 64, 0.25);
+    }
+
+    .hero-card h2 {
+      max-width: 350px;
+      font-size: 2rem;
+      line-height: 1.16;
+    }
+
+    .consultation-box {
+      margin-top: 34px;
+      padding: 20px;
+      color: var(--text);
+      background: white;
+      border-radius: 20px;
+    }
+
+    .doctor-row {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .avatar {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      flex: 0 0 auto;
+      place-items: center;
+      color: white;
+      background: var(--blue);
+      border-radius: 50%;
+      font-size: 1.45rem;
+    }
+
+    .doctor-row strong,
+    .doctor-row span {
+      display: block;
+    }
+
+    .doctor-row span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .consultation-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .online {
+      color: var(--success);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .online::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 7px;
+      background: #19a565;
+      border-radius: 50%;
+    }
+
+    .floating-badge {
+      position: absolute;
+      right: -24px;
+      bottom: 36px;
+      max-width: 190px;
+      padding: 15px;
+      color: var(--text);
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .floating-badge strong,
+    .floating-badge span {
+      display: block;
+    }
+
+    .floating-badge span {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    section {
+      padding: 76px 0;
+    }
+
+    .section-heading {
+      max-width: 680px;
+      margin-bottom: 30px;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 12px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
+      letter-spacing: -0.035em;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+    }
+
+    .stats {
+      margin-top: -30px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .stat {
+      padding: 26px;
+      text-align: center;
+    }
+
+    .stat + .stat {
+      border-left: 1px solid var(--border);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--primary);
+      font-size: 1.85rem;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 12px;
+      margin-bottom: 22px;
+      padding: 18px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 12px;
+      color: var(--text);
+      background: white;
+      border: 1px solid #cddbd7;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(20, 108, 91, 0.12);
+    }
+
+    .filter-action {
+      align-self: end;
+    }
+
+    .results-message {
+      margin-bottom: 16px;
+      color: var(--muted);
+    }
+
+    .hospital-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .hospital-card {
+      display: flex;
+      flex-direction: column;
+      padding: 22px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(18, 70, 59, 0.06);
+      transition: 0.2s ease;
+    }
+
+    .hospital-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .hospital-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      background: var(--primary-light);
+      border-radius: 13px;
+      font-size: 1.35rem;
+    }
+
+    .distance {
+      padding: 5px 9px;
+      color: var(--primary-dark);
+      background: var(--primary-light);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .hospital-card h3 {
+      margin: 18px 0 4px;
+      line-height: 1.3;
+    }
+
+    .hospital-location {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .service-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 18px 0;
+    }
+
+    .service-tag {
+      padding: 5px 9px;
+      color: #415752;
+      background: #f0f5f3;
+      border-radius: 8px;
+      font-size: 0.78rem;
+    }
+
+    .card-details {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 7px 0;
+      color: var(--muted);
+      font-size: 0.87rem;
+    }
+
+    .detail-row strong {
+      color: var(--text);
+      text-align: right;
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin-top: 18px;
+    }
+
+    .empty-state {
+      display: none;
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--muted);
+      background: white;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+    }
+
+    .telemedicine {
+      background: #eaf7f3;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature-card {
+      padding: 26px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      color: white;
+      background: var(--primary);
+      border-radius: 15px;
+      font-size: 1.4rem;
+    }
+
+    .feature-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .emergency-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 28px 32px;
+      color: white;
+      background: #8f251f;
+      border-radius: 22px;
+    }
+
+    .emergency-banner h2 {
+      margin-bottom: 7px;
+    }
+
+    .emergency-banner p {
+      margin-bottom: 0;
+      color: #ffe7e4;
+    }
+
+    .emergency-number {
+      padding: 12px 18px;
+      color: #8f251f;
+      background: white;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    footer {
+      padding: 36px 0;
+      color: #c5d9d4;
+      background: #092e27;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .footer-content p {
+      max-width: 600px;
+      margin-bottom: 0;
+      font-size: 0.9rem;
+    }
+
+    dialog {
+      width: min(650px, calc(100% - 24px));
+      max-height: calc(100vh - 30px);
+      padding: 0;
+      overflow: auto;
+      border: 0;
+      border-radius: 20px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+    }
+
+    dialog::backdrop {
+      background: rgba(5, 30, 25, 0.68);
+      backdrop-filter: blur(3px);
+    }
+
+    .modal-header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 22px 24px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-header h2 {
+      margin-bottom: 2px;
+      font-size: 1.4rem;
+    }
+
+    .modal-header p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .close-button {
+      width: 40px;
+      height: 40px;
+      flex: 0 0 auto;
+      color: var(--muted);
+      background: #f2f5f4;
+      border: 0;
+      border-radius: 50%;
+      font-size: 1.3rem;
+    }
+
+    .appointment-form {
+      padding: 24px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .required {
+      color: var(--danger);
+    }
+
+    .appointment-form textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .form-notice {
+      margin: 18px 0;
+      padding: 12px 14px;
+      color: #4d5d59;
+      background: #f2f6f5;
+      border-radius: 10px;
+      font-size: 0.86rem;
+    }
+
+    .submit-button {
+      width: 100%;
+    }
+
+    .confirmation {
+      display: none;
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .confirmation-icon {
+      width: 70px;
+      height: 70px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 18px;
+      color: white;
+      background: var(--success);
+      border-radius: 50%;
+      font-size: 2rem;
+    }
+
+    .confirmation-details {
+      margin: 22px 0;
+      padding: 16px;
+      text-align: left;
+      background: #f4f8f7;
+      border-radius: 12px;
+    }
+
+    .confirmation-details p {
+      margin: 5px 0;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid,
+      .hospital-grid,
+      .feature-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero-copy-area {
+        grid-column: 1 / -1;
+      }
+
+      .hero-card {
+        grid-column: 1 / -1;
+        min-height: auto;
+      }
+
+      .filters {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .filter-action {
+        align-self: stretch;
+      }
+
+      .filter-action button {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 50px;
+      }
+
+      .hero-grid,
+      .hospital-grid,
+      .feature-grid,
+      .filters,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .search-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat + .stat {
+        border-top: 1px solid var(--border);
+        border-left: 0;
+      }
+
+      .floating-badge {
+        position: static;
+        max-width: none;
+        margin-top: 18px;
+      }
+
+      .card-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .emergency-banner,
+      .footer-content {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .full-width {
+        grid-column: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Primary navigation">
+      <a class="logo" href="#">
+        <span class="logo-mark" aria-hidden="true">+</span>
+        RuralCare Connect
+      </a>
+
+      <div class="nav-links">
+        <a href="#hospitals">Find hospitals</a>
+        <a href="#telemedicine">Telemedicine</a>
+        <a href="#emergency">Emergency</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy-area">
+          <span class="eyebrow">Healthcare closer to home</span>
+          <h1>Quality care for <span>every rural community.</span></h1>
+
+          <p class="hero-copy">
+            Find nearby hospitals, understand the services they provide, consult
+            doctors remotely, and book appointments from one accessible platform.
+          </p>
+
+          <form class="search-panel" id="location-form">
+            <label for="location-search" class="sr-only"></label>
+            <input
+              id="location-search"
+              type="search"
+              placeholder="Enter village, town, district, or PIN code"
+              aria-label="Enter your location"
+            />
+            <button class="primary-button" type="submit">
+              Find nearby hospitals
+            </button>
+          </form>
+
+          <p class="hero-note">
+            Prototype data is shown for demonstration. Live results require a
+            verified hospital-location service.
+          </p>
+        </div>
+
+        <div class="hero-card">
+          <span class="eyebrow">Telemedicine available</span>
+          <h2>Speak with a qualified doctor without travelling far.</h2>
+
+          <div class="consultation-box">
+            <div class="doctor-row">
+              <div class="avatar" aria-hidden="true">⚕</div>
+              <div>
+                <strong>General physician</strong>
+                <span>Video and audio consultation</span>
+              </div>
+            </div>
+
+            <div class="consultation-status">
+              <span class="online">Doctors available</span>
+              <button
+                class="secondary-button quick-book-button"
+                type="button"
+                data-hospital="RuralCare Telemedicine Centre"
+                data-mode="Video consultation"
+              >
+                Book online
+              </button>
+            </div>
+          </div>
+
+          <div class="floating-badge">
+            <strong>Low-bandwidth support</strong>
+            <span>Audio consultations are available when video is unstable.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="stats">
+      <div class="container stats-grid">
+        <div class="stat">
+          <strong id="hospital-count">6</strong>
+          <span>Hospitals in this demo area</span>
+        </div>
+        <div class="stat">
+          <strong>12+</strong>
+          <span>Healthcare services</span>
+        </div>
+        <div class="stat">
+          <strong>24/7</strong>
+          <span>Emergency guidance</span>
+        </div>
+      </div>
+    </div>
+
+    <section id="hospitals">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Nearby care</span>
+          <h2>Compare hospitals and choose the care you need.</h2>
+          <p>
+            Filter hospitals by service, consultation method, and distance.
+            Availability shown here is sample information.
+          </p>
+        </div>
+
+        <div class="filters" aria-label="Hospital filters">
+          <div class="field">
+            <label for="service-filter">Required service</label>
+            <select id="service-filter">
+              <option value="all">All services</option>
+              <option value="general medicine">General medicine</option>
+              <option value="maternity">Maternity</option>
+              <option value="pediatrics">Pediatrics</option>
+              <option value="diagnostics">Diagnostics</option>
+              <option value="emergency">Emergency</option>
+              <option value="cardiology">Cardiology</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="mode-filter">Consultation type</label>
+            <select id="mode-filter">
+              <option value="all">Any consultation type</option>
+              <option value="telemedicine">Telemedicine available</option>
+              <option value="in-person">In-person appointment</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="distance-filter">Maximum distance</label>
+            <select id="distance-filter">
+              <option value="100">Any distance</option>
+              <option value="5">Within 5 km</option>
+              <option value="10">Within 10 km</option>
+              <option value="20">Within 20 km</option>
+            </select>
+          </div>
+
+          <div class="filter-action">
+            <button class="primary-button" id="apply-filters" type="button">
+              Apply filters
+            </button>
+          </div>
+        </div>
+
+        <p class="results-message" id="results-message" aria-live="polite">
+          Showing 6 nearby hospitals.
+        </p>
+
+        <div class="hospital-grid" id="hospital-grid"></div>
+
+        <div class="empty-state" id="empty-state">
+          <h3>No matching hospitals found</h3>
+          <p>Try increasing the distance or selecting a different service.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="telemedicine" id="telemedicine">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">How telemedicine helps</span>
+          <h2>Care designed for distance and limited connectivity.</h2>
+          <p>
+            Remote consultations can reduce unnecessary travel while connecting
+            patients with appropriate medical professionals.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">⌁</div>
+            <h3>Video or audio consultation</h3>
+            <p>
+              Choose video where connectivity permits or an audio consultation
+              in areas with slower mobile networks.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">▤</div>
+            <h3>Digital prescriptions</h3>
+            <p>
+              Receive prescriptions and follow-up instructions digitally after
+              an eligible consultation.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">↻</div>
+            <h3>Referral support</h3>
+            <p>
+              A clinician can recommend in-person care or referral to a suitable
+              hospital when examination or treatment is required.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="emergency">
+      <div class="container">
+        <div class="emergency-banner">
+          <div>
+            <h2>Do you need urgent medical help?</h2>
+            <p>
+              Telemedicine is not a replacement for emergency care. In India,
+              call the national emergency response number or go to the nearest
+              emergency department.
+            </p>
+          </div>
+          <a class="emergency-number" href="tel:112">Call 112</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <div>
+        <strong>RuralCare Connect</strong>
+        <p>
+          A demonstration interface for improving access to rural healthcare
+          information and appointment booking.
+        </p>
+      </div>
+      <p>
+        This prototype does not provide medical advice. Hospital listings,
+        distance, doctors, and appointment availability must be verified before
+        production use.
+      </p>
+    </div>
+  </footer>
+
+  <dialog id="booking-dialog" aria-labelledby="booking-title">
+    <div class="modal-header">
+      <div>
+        <h2 id="booking-title">Book an appointment</h2>
+        <p id="selected-hospital">Select your appointment details.</p>
+      </div>
+      <button
+        class="close-button"
+        id="close-dialog"
+        type="button"
+        aria-label="Close appointment form"
+      >
+        ×
+      </button>
+    </div>
+
+    <form class="appointment-form" id="appointment-form">
+      <div class="form-grid">
+        <div class="field">
+          <label for="patient-name">
+            Patient name <span class="required">*</span>
+          </label>
+          <input id="patient-name" name="patientName" required />
+        </div>
+
+        <div class="field">
+          <label for="patient-phone">
+            Mobile number <span class="required">*</span>
+          </label>
+          <input
+            id="patient-phone"
+            name="phone"
+            type="tel"
+            inputmode="numeric"
+            pattern="[0-9]{10}"
+            placeholder="10-digit number"
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label for="appointment-hospital">Hospital</label>
+          <input
+            id="appointment-hospital"
+            name="hospital"
+            readonly
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label for="appointment-mode">
+            Consultation type <span class="required">*</span>
+          </label>
+          <select id="appointment-mode" name="mode" required>
+            <option value="In-person appointment">In-person appointment</option>
+            <option value="Video consultation">Video consultation</option>
+            <option value="Audio consultation">Audio consultation</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="appointment-service">
+            Service <span class="required">*</span>
+          </label>
+          <select id="appointment-service" name="service" required>
+            <option value="">Select a service</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="appointment-date">
+            Preferred date <span class="required">*</span>
+          </label>
+          <input id="appointment-date" name="date" type="date" required />
+        </div>
+
+        <div class="field">
+          <label for="appointment-time">
+            Preferred time <span class="required">*</span>
+          </label>
+          <select id="appointment-time" name="time" required>
+            <option value="">Select a time</option>
+            <option>09:00 AM</option>
+            <option>10:30 AM</option>
+            <option>12:00 PM</option>
+            <option>02:30 PM</option>
+            <option>04:00 PM</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="patient-age">Patient age</label>
+          <input
+            id="patient-age"
+            name="age"
+            type="number"
+            min="0"
+            max="120"
+          />
+        </div>
+
+        <div class="field full-width">
+          <label for="symptoms">Reason for appointment</label>
+          <textarea
+            id="symptoms"
+            name="symptoms"
+            placeholder="Briefly describe the symptoms or care required"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="form-notice">
+        Submitting this demonstration form creates a local confirmation only.
+        A real system must verify availability with the hospital and protect
+        patient data using appropriate security and consent controls.
+      </div>
+
+      <button class="primary-button submit-button" type="submit">
+        Request appointment
+      </button>
+    </form>
+
+    <div class="confirmation" id="confirmation" aria-live="polite">
+      <div class="confirmation-icon" aria-hidden="true">✓</div>
+      <h2>Appointment request recorded</h2>
+      <p>
+        Your request has been prepared. In a live system, the hospital would
+        confirm the appointment by phone or SMS.
+      </p>
+
+      <div class="confirmation-details" id="confirmation-details"></div>
+
+      <button class="primary-button" id="finish-button" type="button">
+        Done
+      </button>
+    </div>
+  </dialog>
+
+  <script>
+    const hospitals = [
+      {
+        name: "Community Health Centre",
+        location: "Central Rural Block",
+        distance: 2.8,
+        services: [
+          "General Medicine",
+          "Maternity",
+          "Pediatrics",
+          "Diagnostics",
+          "Emergency"
+        ],
+        hours: "Open 24 hours",
+        doctors: "8 doctors",
+        telemedicine: true
+      },
+      {
+        name: "Primary Health Centre",
+        location: "North Village",
+        distance: 4.6,
+        services: [
+          "General Medicine",
+          "Maternity",
+          "Vaccination",
+          "Pharmacy"
+        ],
+        hours: "8:00 AM - 6:00 PM",
+        doctors: "4 doctors",
+        telemedicine: true
+      },
+      {
+        name: "District General Hospital",
+        location: "District Headquarters",
+        distance: 9.2,
+        services: [
+          "Emergency",
+          "Surgery",
+          "Cardiology",
+          "Diagnostics",
+          "Pediatrics"
+        ],
+        hours: "Open 24 hours",
+        doctors: "32 doctors",
+        telemedicine: true
+      },
+      {
+        name: "Mother and Child Care Centre",
+        location: "East Panchayat",
+        distance: 6.4,
+        services: [
+          "Maternity",
+          "Pediatrics",
+          "Vaccination",
+          "Diagnostics"
+        ],
+        hours: "7:00 AM - 8:00 PM",
+        doctors: "6 doctors",
+        telemedicine: false
+      },
+      {
+        name: "Rural Wellness Clinic",
+        location: "River Road",
+        distance: 12.5,
+        services: [
+          "General Medicine",
+          "Diabetes Care",
+          "Mental Health",
+          "Pharmacy"
+        ],
+        hours: "9:00 AM - 5:00 PM",
+        doctors: "5 doctors",
+        telemedicine: true
+      },
+      {
+        name: "Sub-District Referral Hospital",
+        location: "South Taluk",
+        distance: 18.3,
+        services: [
+          "Emergency",
+          "Surgery",
+          "Cardiology",
+          "Maternity",
+          "Diagnostics"
+        ],
+        hours: "Open 24 hours",
+        doctors: "18 doctors",
+        telemedicine: false
+      }
+    ];
+
+    const hospitalGrid = document.getElementById("hospital-grid");
+    const resultsMessage = document.getElementById("results-message");
+    const emptyState = document.getElementById("empty-state");
+    const bookingDialog = document.getElementById("booking-dialog");
+    const appointmentForm = document.getElementById("appointment-form");
+    const confirmation = document.getElementById("confirmation");
+    const confirmationDetails = document.getElementById(
+      "confirmation-details"
+    );
+
+    function renderHospitals(list) {
+      hospitalGrid.innerHTML = "";
+
+      list.forEach((hospital) => {
+        const article = document.createElement("article");
+        article.className = "hospital-card";
+
+        article.innerHTML = `
+          <div class="card-top">
+            <div class="hospital-icon" aria-hidden="true">✚</div>
+            <span class="distance">${hospital.distance} km away</span>
+          </div>
+
+          <h3>${hospital.name}</h3>
+          <div class="hospital-location">${hospital.location}</div>
+
+          <div class="service-list">
+            ${hospital.services
+              .map((service) => `<span class="service-tag">${service}</span>`)
+              .join("")}
+          </div>
+
+          <div class="card-details">
+            <div class="detail-row">
+              <span>Hours</span>
+              <strong>${hospital.hours}</strong>
+            </div>
+            <div class="detail-row">
+              <span>Medical team</span>
+              <strong>${hospital.doctors}</strong>
+            </div>
+            <div class="detail-row">
+              <span>Telemedicine</span>
+              <strong>${hospital.telemedicine ? "Available" : "Not listed"}</strong>
+            </div>
+          </div>
+
+          <div class="card-actions">
+            <button
+              class="primary-button book-button"
+              type="button"
+              data-hospital="${hospital.name}"
+              data-mode="In-person appointment"
+            >
+              Book appointment
+            </button>
+
+            <button
+              class="outline-button telemedicine-button"
+              type="button"
+              data-hospital="${hospital.name}"
+              data-mode="Video consultation"
+              ${hospital.telemedicine ? "" : "disabled"}
+            >
+              ${hospital.telemedicine ? "Consult online" : "Online unavailable"}
+            </button>
+          </div>
+        `;
+
+        hospitalGrid.appendChild(article);
+      });
+
+      resultsMessage.textContent =
+        list.length === 1
+          ? "Showing 1 nearby hospital."
+          : `Showing ${list.length} nearby hospitals.`;
+
+      emptyState.style.display = list.length ? "none" : "block";
+      hospitalGrid.style.display = list.length ? "grid" : "none";
+
+      document
+        .querySelectorAll(".book-button, .telemedicine-button")
+        .forEach((button) => {
+          button.addEventListener("click", () => {
+            const hospital = hospitals.find(
+              (item) => item.name === button.dataset.hospital
+            );
+            openBookingDialog(hospital, button.dataset.mode);
+          });
+        });
+    }
+
+    function applyFilters() {
+      const service = document
+        .getElementById("service-filter")
+        .value.toLowerCase();
+      const mode = document.getElementById("mode-filter").value;
+      const maxDistance = Number(
+        document.getElementById("distance-filter").value
+      );
+      const location = document
+        .getElementById("location-search")
+        .value.trim();
+
+      const filtered = hospitals.filter((hospital) => {
+        const matchesService =
+          service === "all" ||
+          hospital.services.some(
+            (item) => item.toLowerCase() === service
+          );
+
+        const matchesMode =
+          mode === "all" ||
+          mode === "in-person" ||
+          (mode === "telemedicine" && hospital.telemedicine);
+
+        return (
+          matchesService &&
+          matchesMode &&
+          hospital.distance <= maxDistance
+        );
+      });
+
+      renderHospitals(filtered);
+
+      if (location) {
+        resultsMessage.textContent += ` Search area: ${location}.`;
+      }
+
+      document
+        .getElementById("hospitals")
+        .scrollIntoView({ behavior: "smooth" });
+    }
+
+    function openBookingDialog(hospital, mode) {
+      appointmentForm.reset();
+      confirmation.style.display = "none";
+      appointmentForm.style.display = "block";
+
+      const hospitalName = hospital
+        ? hospital.name
+        : "RuralCare Telemedicine Centre";
+
+      document.getElementById("selected-hospital").textContent =
+        hospitalName;
+      document.getElementById("appointment-hospital").value =
+        hospitalName;
+      document.getElementById("appointment-mode").value = mode;
+
+      const serviceSelect = document.getElementById(
+        "appointment-service"
+      );
+
+      const availableServices = hospital
+        ? hospital.services
+        : [
+            "General Medicine",
+            "Pediatrics",
+            "Mental Health",
+            "Follow-up Consultation"
+          ];
+
+      serviceSelect.innerHTML =
+        '<option value="">Select a service</option>' +
+        availableServices
+          .map(
+            (service) =>
+              `<option value="${service}">${service}</option>`
+          )
+          .join("");
+
+      bookingDialog.showModal();
+    }
+
+    document
+      .getElementById("apply-filters")
+      .addEventListener("click", applyFilters);
+
+    document
+      .getElementById("location-form")
+      .addEventListener("submit", (event) => {
+        event.preventDefault();
+        applyFilters();
+      });
+
+    document
+      .querySelectorAll(".quick-book-button")
+      .forEach((button) => {
+        button.addEventListener("click", () => {
+          openBookingDialog(null, button.dataset.mode);
+        });
+      });
+
+    document
+      .getElementById("close-dialog")
+      .addEventListener("click", () => bookingDialog.close());
+
+    document
+      .getElementById("finish-button")
+      .addEventListener("click", () => bookingDialog.close());
+
+    bookingDialog.addEventListener("click", (event) => {
+      if (event.target === bookingDialog) {
+        bookingDialog.close();
+      }
+    });
+
+    appointmentForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const data = new FormData(appointmentForm);
+      const reference = `RC-${Date.now()
+        .toString()
+        .slice(-6)}`;
+
+      confirmationDetails.innerHTML = `
+        <p><strong>Reference:</strong> ${reference}</p>
+        <p><strong>Patient:</strong> ${data.get("patientName")}</p>
+        <p><strong>Hospital:</strong> ${data.get("hospital")}</p>
+        <p><strong>Service:</strong> ${data.get("service")}</p>
+        <p><strong>Type:</strong> ${data.get("mode")}</p>
+        <p><strong>Requested slot:</strong> ${data.get("date")} at ${data.get("time")}</p>
+      `;
+
+      appointmentForm.style.display = "none";
+      confirmation.style.display = "block";
+    });
+
+    const today = new Date();
+    today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+    document.getElementById("appointment-date").min = today
+      .toISOString()
+      .split("T")[0];
+
+    renderHospitals(hospitals);
+  </script>
+</body>
+</html>
